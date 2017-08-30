@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+      table{
+        border-collapse: collapse;
+      }
+      table, tr, td {
+          padding: 5px;
+          border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Welcome {{user.first_name}}</h2>
+    <a href="{% url 'cat:log_out' %}">Log Out</a><p></p>
+    <h4><a href="{% url 'cat:add_cat' %}">Add a cat</a></h4>
+    <table>
+      <th>Cat ID
+        <td>Name</td>
+        <td>Age</td>
+        <td>Likes</td>
+        <td>Action</td>
+      </th>
+      {% for cat in cats %}
+      <tr>
+        {% if user.id == cat.user.id %}
+          <td>{{cat.id}}</td>
+          <td><a href="{% url 'cat:show_cat' cat_id=cat.id %}">{{cat.name}}</a></td>
+          <td>{{cat.age}}</td>
+          <td>{{cat.cat_likes.count}}</td>
+          <td><a href="{% url 'cat:delete_cat' cat_id=cat.id %}">delete</a>  <a href="{% url 'cat:edit' cat_id=cat.id %}">edit</a></td>
+        {% else %}
+          <td>{{cat.id}}</td>
+          <td><a href="{% url 'cat:show_cat' cat_id=cat.id %}">{{cat.name}}</a></td>
+          <td>{{cat.age}}</td>
+          <td>{{cat.cat_likes.count}}</td>
+          <td><a href="{% url 'cat:add_like' cat_id=cat.id %}">add like</a></td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>

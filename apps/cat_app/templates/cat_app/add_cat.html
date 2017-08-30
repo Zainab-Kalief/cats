@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h2>Add a cat</h2>
+    <form  action="{% url 'cat:post_cat' %}" method="post">
+      {% csrf_token %}
+      <input type="text" name="name" placeholder="cat name"><p></p>
+      <input type="text" name="age" placeholder="age"><p></p>
+      <input type="submit" value="Add Cat"><p></p>
+      {% if messages %}
+        {% for message in messages %}
+          {% if 'data' in message.tags %}
+             <p>{{message}}</p>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </form>
+  </body>
+</html>
